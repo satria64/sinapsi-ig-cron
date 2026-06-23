@@ -2,8 +2,9 @@ name: Instagram cron (mirror da Facebook)
 
 on:
   schedule:
-    # Orari in UTC. Estate (CEST=UTC+2): 05:35/10:35/17:35 UTC = 07:35/12:35/19:35 IT.
-    - cron: "35 5,10,17 * * *"
+    # GitHub Actions salta/ritarda spesso gli scheduled cron → giriamo OGNI 30 MIN.
+    # È idempotente (specchia FB→IG, dedup): pubblica solo i pendenti, gli altri run sono no-op.
+    - cron: "*/30 * * * *"
   workflow_dispatch: {}   # avvio manuale per test
 
 permissions:
